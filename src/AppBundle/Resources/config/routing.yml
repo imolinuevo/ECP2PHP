@@ -1,0 +1,16 @@
+app_courts:
+    resource: "@AppBundle/Resources/config/routing/court.yml"
+    prefix:   /courts
+    
+app_groups:
+    resource: "@AppBundle/Resources/config/routing/group.yml"
+    prefix:   /groups
+    
+app_users:
+    resource: "@AppBundle/Resources/config/routing/user.yml"
+    prefix:   /users
+    
+app_reservations:
+    resource: "@AppBundle/Resources/config/routing/reservation.yml"
+    prefix:   /reservations
+

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Court list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for court in courts %}
+            <tr>
+                <td><a href="{{ path('courts_show', { 'id': court.id }) }}">{{ court.id }}</a></td>
+                <td>{% if court.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('courts_show', { 'id': court.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('courts_edit', { 'id': court.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('courts_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
