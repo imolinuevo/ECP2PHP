@@ -1,19 +1,19 @@
 padel_api_courts:
     type: rest
     resource: "@AppBundle/Controller/CourtFOSController.php"
-    name_prefix:  api2_courts_
+    name_prefix:  api_v1_courts_
     
 padel_api_users:
     type: rest
     resource: "@AppBundle/Controller/UserFOSController.php"
-    name_prefix:  api2_users_
+    name_prefix:  api_v1_users_
     
 padel_api_groups:
     type: rest
     resource: "@AppBundle/Controller/GroupFOSController.php"
-    name_prefix:  api2_groups_
+    name_prefix:  api_v1_groups_
     
 padel_api_reservations:
     type: rest
     resource: "@AppBundle/Controller/ReservationFOSController.php"
-    name_prefix:  api2_reservations_
+    name_prefix:  api_v1_reservations_
