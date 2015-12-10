@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Reservation;
 
 class ReservationFOSController extends FOSRestController {
@@ -19,10 +20,12 @@ class ReservationFOSController extends FOSRestController {
         return $entity;
     }
     
-    public function putReservationAction($reservationId) {
+    public function putReservationAction($reservationId, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:Reservation')->find($reservationId);
-        //set params
+        $entity->setDatetime(new \Datetime('now'));
+        $entity->setCourt($em->getRepository('AppBundle:Court')->find($request->query->get('courtid')));
+        $entity->setUser($em->getRepository('AppBundle:User')->find($request->query->get('userid')));
         $em->persist($entity);
         $em->flush();
     }
@@ -33,10 +36,12 @@ class ReservationFOSController extends FOSRestController {
         return $entities;
     }
     
-    public function postReservationsAction() {
-        $entity = new Reservation();
-        //set params
+    public function postReservationsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $entity = new Reservation();
+        $entity->setDatetime(new \Datetime('now'));
+        $entity->setCourt($em->getRepository('AppBundle:Court')->find($request->query->get('courtid')));
+        $entity->setUser($em->getRepository('AppBundle:User')->find($request->query->get('userid')));
         $em->persist($entity);
         $em->flush();
     }

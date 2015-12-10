@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Court;
 
 class CourtFOSController extends FOSRestController {
@@ -19,10 +20,10 @@ class CourtFOSController extends FOSRestController {
         return $entity;
     }
     
-    public function putCourtAction($courtId) {
+    public function putCourtAction($courtId, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:Court')->find($courtId);
-        //set params
+        $entity->setActive($request->query->get('active'));
         $em->persist($entity);
         $em->flush();
     }
@@ -33,9 +34,8 @@ class CourtFOSController extends FOSRestController {
         return $entities;
     }
     
-    public function postCourtsAction() {
+    public function postCourtsAction(Request $request) {
         $entity = new Court();
-        //set params
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();

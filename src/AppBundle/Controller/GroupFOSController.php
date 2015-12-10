@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Group;
 
 class GroupFOSController extends FOSRestController {
@@ -12,10 +13,10 @@ class GroupFOSController extends FOSRestController {
         return $entity;
     }
     
-    public function putGroupAction($groupId) {
+    public function putGroupAction($groupId, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:Group')->find($groupId);
-        //set params
+        $entity->setName($request->query->get('name'));
         $em->persist($entity);
         $em->flush();
     }
@@ -26,9 +27,9 @@ class GroupFOSController extends FOSRestController {
         return $entities;
     }
     
-    public function postGroupsAction() {
+    public function postGroupsAction(Request $request) {
         $entity = new Group();
-        //set params
+        $entity->setName($request->query->get('name'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();

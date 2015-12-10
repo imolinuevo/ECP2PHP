@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 
 class UserFOSController extends FOSRestController {
@@ -19,10 +20,20 @@ class UserFOSController extends FOSRestController {
         return $entity;
     }
     
-    public function putUserAction($userId) {
+    public function putUserAction($userId, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('AppBundle:User')->find($userId);
-        //set params
+        $entity->setUsername($request->query->get('username'));
+        $entity->setUsernameCanonical(strtolower($request->query->get('username')));
+        $entity->setEmail($request->query->get('email'));
+        $entity->setEmailCanonical(strtolower($request->query->get('email')));
+        $entity->setEnabled(true);
+        $entity->setSalt("salt");
+        $entity->setPassword($request->query->get('password'));
+        $entity->setLocked(false);
+        $entity->setExpired(false);
+        $entity->setCredentialsExpireAt(new \DateTime('2000-01-01'));
+        $entity->setCredentialsExpired(false);
         $em->persist($entity);
         $em->flush();
     }
@@ -33,9 +44,19 @@ class UserFOSController extends FOSRestController {
         return $entities;
     }
     
-    public function postUsersAction() {
+    public function postUsersAction(Request $request) {
         $entity = new User();
-        //set params
+        $entity->setUsername($request->query->get('username'));
+        $entity->setUsernameCanonical(strtolower($request->query->get('username')));
+        $entity->setEmail($request->query->get('email'));
+        $entity->setEmailCanonical(strtolower($request->query->get('email')));
+        $entity->setEnabled(true);
+        $entity->setSalt("salt");
+        $entity->setPassword($request->query->get('password'));
+        $entity->setLocked(false);
+        $entity->setExpired(false);
+        $entity->setCredentialsExpireAt(new \DateTime('2000-01-01'));
+        $entity->setCredentialsExpired(false);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
